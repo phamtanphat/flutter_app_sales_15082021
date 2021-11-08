@@ -17,6 +17,14 @@ abstract class BaseBloc extends ChangeNotifier{
   Stream<bool> get loadingStream => _loadingController.stream;
   Sink<bool> get loadingSink => _loadingController.sink;
 
+  BaseBloc(){
+    _eventStreamController.stream.listen((event) {
+      dispatch(event);
+    });
+  }
+
+  void dispatch(BaseEvent event);
+
   @override
   void dispose() {
     super.dispose();
