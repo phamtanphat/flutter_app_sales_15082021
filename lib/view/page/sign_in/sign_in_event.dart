@@ -5,12 +5,12 @@ abstract class SignInEventBase extends BaseEvent{
 }
 
 class SignInEvent extends SignInEventBase{
-  late String userName;
+  late String email;
   late String password;
 
-  SignInEvent({required this.userName , required this.password});
+  SignInEvent({required this.email , required this.password});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [userName,password];
+  List<Object?> get props => [email,password];
 }
