@@ -16,4 +16,14 @@ class AuthenticationRequest{
       "password": password
     });
   }
+
+  Future signUp(String fullName, String email, String phone, String password, String address) {
+    return _dio.post("user/sign-up", data: {
+      "fullName": fullName,
+      "email": email,
+      "phone": phone,
+      "password": password,
+      "address": address
+    });
+  }
 }

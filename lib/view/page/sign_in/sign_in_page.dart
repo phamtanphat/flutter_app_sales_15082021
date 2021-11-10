@@ -111,7 +111,7 @@ class _SignInContainerState extends State<SignInContainer> {
             Text("Don't have an account!"),
             InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, "/sign-up");
               },
               child: Text("Sign Up",
                   style: TextStyle(
