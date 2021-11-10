@@ -19,11 +19,12 @@ class AuthenticationRepository {
     Completer<ResponseModel<UserModel>> completer = Completer();
     try{
       Response response = await request.signIn(email, password);
-      print(response.data);
+      ResponseModel<UserModel> responseModel = ResponseModel.fromJson(response.data,UserModel.fromJsonModel);
+      completer.complete(responseModel);
     }on DioError catch(dioError){
-      print(dioError.response?.data["message"]);
+      completer.completeError(dioError.response?.data["message"]);
     }catch (error){
-      print(error.toString());
+      completer.completeError(error.toString());
     }
     return completer.future;
   }

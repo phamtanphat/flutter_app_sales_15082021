@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/base/base_widget.dart';
+import 'package:flutter_app_sales_15082021/model/response_model.dart';
+import 'package:flutter_app_sales_15082021/model/user_model.dart';
+import 'package:flutter_app_sales_15082021/request/authentication_request.dart';
 import 'package:flutter_app_sales_15082021/view/widget/button_widget.dart';
 class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -25,6 +29,13 @@ class _SignInContainerState extends State<SignInContainer> {
   final _passController = TextEditingController();
 
   var isPassVisible = true;
+  
+  
+  @override
+  void didChangeDependencies() async{
+    super.didChangeDependencies();
+
+  }
 
   @override
   Widget build(BuildContext context) {
