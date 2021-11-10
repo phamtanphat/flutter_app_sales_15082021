@@ -184,7 +184,9 @@ class _SignInContainerState extends State<SignInContainer> {
         child: ButtonWidget(
           title: "Sign In",
           onPress: () {
-            bloc.eventSink.add(SignInEvent(email: "nguyenvana@gmail.com", password: "12345678"));
+            var email = _emailController.text.toString();
+            var password = _passController.text.toString();
+            bloc.eventSink.add(SignInEvent(email: email, password: password));
           },
         ));
   }
