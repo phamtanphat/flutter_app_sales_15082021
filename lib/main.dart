@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/sign-in" : (context) => SignInPage()
+        "/sign-in" : (context) => SignInPage(),
       },
       initialRoute: "/sign-in",
     );

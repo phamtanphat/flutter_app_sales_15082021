@@ -14,3 +14,22 @@ class SignInEvent extends SignInEventBase{
   // TODO: implement props
   List<Object?> get props => [email,password];
 }
+
+class SignInEventSuccess extends SignInEventBase{
+
+  SignInEventSuccess();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+class SignInEventFail extends SignInEventBase{
+
+  late String message;
+
+  SignInEventFail({required this.message});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [message];
+}

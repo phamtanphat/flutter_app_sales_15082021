@@ -16,8 +16,6 @@ class SignInBloc extends BaseBloc{
     this.repository = repository;
   }
 
-  StreamController<UserModel> userController = StreamController();
-
   @override
   void dispatch(BaseEvent event) {
     if(event is SignInEvent){
@@ -25,19 +23,23 @@ class SignInBloc extends BaseBloc{
     }
   }
 
-  void handleSignIn(SignInEvent event) async{
-    try{
-      ResponseModel<UserModel> response = await repository.signIn(event.email, event.password);
-      userController.sink.add(response.data!);
-    }catch(e){
-      userController.sink.addError(e);
-    }
+  void handleSignIn(SignInEvent event) {
+    loadingSink.add(true);
+    Future.delayed(Duration(seconds: 2),() async{
+      try{
+        ResponseModel<UserModel> response = await repository.signIn(event.email, event.password);
+        progressSink.add(SignInEventSuccess());
+      }catch(e){
+        progressSink.add(SignInEventFail(message: e.toString()));
+      }finally{
+        loadingSink.add(false);
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    userController.close();
   }
 
 }

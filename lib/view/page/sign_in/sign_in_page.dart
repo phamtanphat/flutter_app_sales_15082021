@@ -6,6 +6,8 @@ import 'package:flutter_app_sales_15082021/request/authentication_request.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_bloc.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_event.dart';
 import 'package:flutter_app_sales_15082021/view/widget/button_widget.dart';
+import 'package:flutter_app_sales_15082021/view/widget/container_listener_widget.dart';
+import 'package:flutter_app_sales_15082021/view/widget/loading_widget.dart';
 import 'package:provider/provider.dart';
 class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -59,28 +61,41 @@ class _SignInContainerState extends State<SignInContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-                flex: 2, child: Image.asset("assets/images/ic_hello_food.png")),
-            Expanded(
-              flex: 4,
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildPhoneTextField(),
-                    _buildPasswordTextField(),
-                    _buildButtonSignIn(),
-                  ],
+    return ContainerListenerWidget<SignInBloc>(
+      callback: (event){
+        if (event is SignInEventSuccess){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Thanh cong")));
+        }else{
+          var message = (event as SignInEventFail).message;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+        }
+      },
+      child: LoadingWidget(
+        bloc: bloc,
+        child: SafeArea(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                    flex: 2, child: Image.asset("assets/images/ic_hello_food.png")),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildPhoneTextField(),
+                        _buildPasswordTextField(),
+                        _buildButtonSignIn(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(child: _buildTextSignUp())
+              ],
             ),
-            Expanded(child: _buildTextSignUp())
-          ],
+          ),
         ),
       ),
     );
@@ -96,7 +111,7 @@ class _SignInContainerState extends State<SignInContainer> {
             Text("Don't have an account!"),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, "/sign-up");
+                Navigator.pop(context);
               },
               child: Text("Sign Up",
                   style: TextStyle(
@@ -173,5 +188,6 @@ class _SignInContainerState extends State<SignInContainer> {
           },
         ));
   }
+
 }
 
