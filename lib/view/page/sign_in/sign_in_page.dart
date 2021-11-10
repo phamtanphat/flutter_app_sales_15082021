@@ -1,14 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/base/base_widget.dart';
-import 'package:flutter_app_sales_15082021/model/response_model.dart';
-import 'package:flutter_app_sales_15082021/model/user_model.dart';
+import 'package:flutter_app_sales_15082021/repository/authentication_repository.dart';
 import 'package:flutter_app_sales_15082021/request/authentication_request.dart';
+import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_bloc.dart';
+import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_event.dart';
 import 'package:flutter_app_sales_15082021/view/widget/button_widget.dart';
+import 'package:provider/provider.dart';
 class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageContainer(
-      providers: [],
+      providers: [
+        Provider(create: (context) => AuthenticationRequest()),
+        ProxyProvider<AuthenticationRequest,AuthenticationRepository>(
+          create: (context) => AuthenticationRepository(),
+          update: (context, request , repository){
+            repository!.updateAuthenticationRequest(request);
+            return repository;
+          },
+        ),
+        ChangeNotifierProxyProvider<AuthenticationRepository,SignInBloc>(
+          create: (context) => SignInBloc(),
+          update: (context, repository , bloc){
+            bloc!.updateAuthenticationRepo(repository);
+            return bloc;
+          },
+        )
+      ],
       appBar: AppBar(
         title: Text("Sign In"),
       ),
@@ -29,12 +47,14 @@ class _SignInContainerState extends State<SignInContainer> {
   final _passController = TextEditingController();
 
   var isPassVisible = true;
-  
+
+  late SignInBloc bloc;
   
   @override
-  void didChangeDependencies() async{
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-
+    bloc = context.read();
   }
 
   @override
@@ -149,6 +169,7 @@ class _SignInContainerState extends State<SignInContainer> {
         child: ButtonWidget(
           title: "Sign In",
           onPress: () {
+            bloc.eventSink.add(SignInEvent(email: "nguyenvana@gmail.com", password: "12345678"));
           },
         ));
   }
