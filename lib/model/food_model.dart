@@ -85,6 +85,11 @@ class FoodModel {
   }
 
   static List<FoodModel> pareJsonModelToList(List<dynamic> data){
+    // List<FoodModel> listModel = [];
+    // for(var i = 0 ; i < data.length ; i++){
+    //   FoodModel model = FoodModel.fromJson(data[i]);
+    //   listModel.add(model);
+    // }
     return data.map((json) => FoodModel.fromJson(json)).toList();
   }
 
