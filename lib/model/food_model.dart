@@ -84,6 +84,8 @@ class FoodModel {
     return map;
   }
 
+  static FoodModel fromJsonModel(Map<String,dynamic> json) => FoodModel.fromJson(json);
+
 }
 
 
