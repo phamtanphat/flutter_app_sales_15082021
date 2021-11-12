@@ -19,7 +19,7 @@ class FoodRepository{
     try{
       Response response = await _request.fetchListFood();
       if(response.statusCode == 200){
-        ResponseModel<List<FoodModel>> responseModel = ResponseModel.fromJson(response.data,FoodModel.fromJsonModel);
+        ResponseModel<List<FoodModel>> responseModel = ResponseModel.fromJson(response.data,FoodModel.pareJsonModelToList);
         completer.complete(responseModel);
       }
     }on DioError catch(dioError){

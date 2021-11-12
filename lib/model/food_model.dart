@@ -84,6 +84,10 @@ class FoodModel {
     return map;
   }
 
+  static List<FoodModel> pareJsonModelToList(List<dynamic> data){
+    return data.map((json) => FoodModel.fromJson(json)).toList();
+  }
+
   static FoodModel fromJsonModel(Map<String,dynamic> json) => FoodModel.fromJson(json);
 
 }
