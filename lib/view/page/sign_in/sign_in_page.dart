@@ -65,6 +65,7 @@ class _SignInContainerState extends State<SignInContainer> {
       callback: (event){
         if (event is SignInEventSuccess){
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Thanh cong")));
+          Navigator.pushReplacementNamed(context, "/home");
         }else{
           var message = (event as SignInEventFail).message;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
