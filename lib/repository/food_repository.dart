@@ -14,12 +14,12 @@ class FoodRepository{
     _request = request;
   }
 
-  Future<ResponseModel<FoodModel>> fetchListFood() async{
-    Completer<ResponseModel<FoodModel>> completer = Completer();
+  Future<ResponseModel<List<FoodModel>>> fetchListFood() async{
+    Completer<ResponseModel<List<FoodModel>>> completer = Completer();
     try{
       Response response = await _request.fetchListFood();
       if(response.statusCode == 200){
-        ResponseModel<FoodModel> responseModel = ResponseModel.fromJson(response.data,FoodModel.fromJsonModel);
+        ResponseModel<List<FoodModel>> responseModel = ResponseModel.fromJson(response.data,FoodModel.fromJsonModel);
         completer.complete(responseModel);
       }
     }on DioError catch(dioError){

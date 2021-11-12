@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/view/page/home/home_event.dart';
+import 'package:flutter_app_sales_15082021/view/page/home/home_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_up/sign_up_page.dart';
 
