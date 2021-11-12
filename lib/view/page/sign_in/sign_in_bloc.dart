@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_app_sales_15082021/base/base_bloc.dart';
 import 'package:flutter_app_sales_15082021/base/base_event.dart';
+import 'package:flutter_app_sales_15082021/common/share_pref.dart';
 import 'package:flutter_app_sales_15082021/model/response_model.dart';
 import 'package:flutter_app_sales_15082021/model/user_model.dart';
 import 'package:flutter_app_sales_15082021/repository/authentication_repository.dart';
@@ -28,7 +29,10 @@ class SignInBloc extends BaseBloc{
     Future.delayed(Duration(seconds: 2),() async{
       try{
         ResponseModel<UserModel> response = await repository.signIn(event.email, event.password);
-        progressSink.add(SignInEventSuccess());
+        if(response.code == 200){
+          SPref.instance.set("token", response.data!.token!);
+          progressSink.add(SignInEventSuccess());
+        }
       }catch(e){
         progressSink.add(SignInEventFail(message: e.toString()));
       }finally{

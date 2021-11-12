@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/base/base_widget.dart';
+import 'package:flutter_app_sales_15082021/common/share_pref.dart';
 import 'package:flutter_app_sales_15082021/repository/authentication_repository.dart';
 import 'package:flutter_app_sales_15082021/request/authentication_request.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_bloc.dart';
@@ -53,7 +54,7 @@ class _SignInContainerState extends State<SignInContainer> {
   late SignInBloc bloc;
   
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies(){
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     bloc = context.read();
