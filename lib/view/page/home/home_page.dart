@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/base/base_widget.dart';
 import 'package:flutter_app_sales_15082021/common/share_pref.dart';
 import 'package:flutter_app_sales_15082021/model/food_model.dart';
+import 'package:flutter_app_sales_15082021/model/order_model.dart';
 import 'package:flutter_app_sales_15082021/repository/food_repository.dart';
 import 'package:flutter_app_sales_15082021/repository/order_repository.dart';
 import 'package:flutter_app_sales_15082021/request/food_request.dart';
@@ -62,6 +63,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
     super.didChangeDependencies();
     bloc = context.read();
     bloc.eventSink.add(HomeEventFetchListFood());
+    bloc.eventSink.add(HomeEventGetTotalCount());
   }
 
   @override
@@ -77,15 +79,32 @@ class _HomePageContainerState extends State<HomePageContainer> {
         ),
         title: const Text("Food"),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 10, top: 5),
-            child: Badge(
-                padding: const EdgeInsets.all(10),
-                badgeContent: const Text("0",
-                    style: TextStyle(fontSize: 15, color: Colors.white)),
-                child: IconButton(
-                    icon: const Icon(Icons.shopping_cart), onPressed: () {})),
-          )
+          StreamProvider.value(
+              value: bloc.orderModelController.stream,
+              initialData: OrderModel(orderId: "", total: 0),
+              child: Consumer<OrderModel>(
+                builder: (context , orderModel , child){
+                    if (orderModel.total! > 0){
+                      return Container(
+                        margin: const EdgeInsets.only(right: 10, top: 5),
+                        child: Badge(
+                            padding: const EdgeInsets.all(10),
+                            badgeContent: Text(orderModel.total!.toString(),
+                                style: TextStyle(fontSize: 15, color: Colors.white)),
+                            child: IconButton(
+                                icon: const Icon(Icons.shopping_cart), onPressed: () {})),
+                      );
+                    }
+                    return Container(
+                      margin: const EdgeInsets.only(right: 10, top: 5),
+                      child: Badge(
+                          padding: const EdgeInsets.all(10),
+                          child: IconButton(
+                              icon: const Icon(Icons.shopping_cart), onPressed: () {})),
+                    );
+                },
+              )
+              ),
         ],
       ),
       body: ContainerListenerWidget<HomeBloc>(
