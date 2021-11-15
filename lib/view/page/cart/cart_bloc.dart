@@ -31,6 +31,7 @@ class CartBloc extends BaseBloc{
     loadingSink.add(true);
     try {
       CartModel cartModel = await _repository.getOrderDetail();
+      print(cartModel.toString());
       cartController.sink.add(cartModel);
     } catch (e) {
       cartController.sink.addError(e.toString());

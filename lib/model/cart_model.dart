@@ -9,5 +9,11 @@ class CartModel{
     items = FoodModel.pareJsonModelToList(json['items']);
   }
 
+
+  @override
+  String toString() {
+    return 'CartModel{total: $total, items: $items}';
+  }
+
   static CartModel fromJsonModel(json) => CartModel.fromJson(json);
 }
