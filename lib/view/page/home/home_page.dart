@@ -1,6 +1,8 @@
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sales_15082021/base/base_widget.dart';
+import 'package:flutter_app_sales_15082021/common/share_pref.dart';
 import 'package:flutter_app_sales_15082021/model/food_model.dart';
 import 'package:flutter_app_sales_15082021/repository/food_repository.dart';
 import 'package:flutter_app_sales_15082021/repository/order_repository.dart';
@@ -66,6 +68,13 @@ class _HomePageContainerState extends State<HomePageContainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: (){
+            SPref.instance.clearSPref();
+            Navigator.pushReplacementNamed(context, "/sign-in");
+          },
+        ),
         title: const Text("Food"),
         actions: [
           Container(
