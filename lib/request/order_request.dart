@@ -13,4 +13,7 @@ class OrderRequest{
       "foodId" : foodId
     });
   }
+  Future getTotalCountCart(){
+    return _dio.get("order/count/shopping-cart");
+  }
 }

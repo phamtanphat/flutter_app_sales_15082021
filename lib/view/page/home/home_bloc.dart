@@ -31,6 +31,8 @@ class HomeBloc extends BaseBloc{
       handleFetchListFood(event);
     }else if(event is HomeEventAddCart){
       handleAddCart(event);
+    }else if(event is HomeEventGetTotalCount){
+      handleTotalCount(event);
     }
   }
 
@@ -58,6 +60,18 @@ class HomeBloc extends BaseBloc{
     try {
       OrderModel orderModel = await _orderRepository.addFoodToCart(event.foodId);
       print(orderModel.total);
+    } catch (e) {
+      orderModelController.sink.addError(e.toString());
+    } finally {
+      loadingSink.add(false);
+    }
+  }
+
+  void handleTotalCount(HomeEventGetTotalCount event) async{
+    loadingSink.add(true);
+    try {
+      OrderModel orderModel = await _orderRepository.getTotalCount();
+      orderModelController.sink.add(orderModel);
     } catch (e) {
       orderModelController.sink.addError(e.toString());
     } finally {

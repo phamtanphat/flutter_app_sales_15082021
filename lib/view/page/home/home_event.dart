@@ -19,3 +19,10 @@ class HomeEventAddCart extends HomeEventBase{
   List<Object?> get props => [];
 
 }
+
+class HomeEventGetTotalCount extends HomeEventBase{
+
+  @override
+  List<Object?> get props => [];
+
+}

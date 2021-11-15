@@ -32,5 +32,20 @@ class OrderRepository{
     return completer.future;
   }
 
+  Future<OrderModel> getTotalCount() async{
+    Completer<OrderModel> completer = Completer();
+    try{
+      Response response = await _orderRequest.getTotalCountCart();
+      if (response.statusCode == 200){
+        ResponseModel<OrderModel> responseModel = ResponseModel.fromJson(response.data,OrderModel.fromJsonModel);
+        completer.complete(responseModel.data);
+      }
+    }on DioError catch (dioError){
+      completer.completeError(dioError.response?.data["message"]);
+    } catch(e){
+      completer.completeError(e.toString());
+    }
+    return completer.future;
+  }
 
 }
