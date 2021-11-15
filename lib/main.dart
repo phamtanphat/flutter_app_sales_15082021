@@ -3,6 +3,7 @@ import 'package:flutter_app_sales_15082021/view/page/home/home_event.dart';
 import 'package:flutter_app_sales_15082021/view/page/home/home_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_up/sign_up_page.dart';
+import 'package:flutter_app_sales_15082021/view/page/splash/splash_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,8 +21,9 @@ class MyApp extends StatelessWidget {
         "/sign-in" : (context) => SignInPage(),
         "/sign-up" : (context) => SignUpPage(),
         "/home" : (context) => HomePage(),
+        "/splash" : (context) => SplashPage(),
       },
-      initialRoute: "/sign-in",
+      initialRoute: "/splash",
     );
   }
 }

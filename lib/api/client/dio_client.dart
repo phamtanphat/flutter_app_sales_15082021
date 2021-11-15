@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_app_sales_15082021/common/share_pref.dart';
 
 class DioClient {
   Dio? _dio;
@@ -16,6 +17,10 @@ class DioClient {
       _dio!.interceptors.add(LogInterceptor(requestBody: true));
       _dio!.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) async{
+          var token = await SPref.instance.get("token");
+          if (token != null) {
+            options.headers["Authorization"] = "Bearer " + token;
+          }
           return handler.next(options);
         },
         onResponse: (e, handler) {

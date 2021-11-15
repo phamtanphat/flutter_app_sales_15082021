@@ -9,3 +9,13 @@ class HomeEventFetchListFood extends HomeEventBase{
   List<Object?> get props => [];
 
 }
+
+class HomeEventAddCart extends HomeEventBase{
+  final String foodId;
+
+  HomeEventAddCart({required this.foodId});
+
+  @override
+  List<Object?> get props => [];
+
+}
