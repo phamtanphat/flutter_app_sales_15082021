@@ -16,4 +16,8 @@ class OrderRequest{
   Future getTotalCountCart(){
     return _dio.get("order/count/shopping-cart");
   }
+
+  Future getDetailOrder(){
+    return _dio.get("order/shopping-cart");
+  }
 }
