@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_sales_15082021/view/page/cart/cart_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/home/home_event.dart';
 import 'package:flutter_app_sales_15082021/view/page/home/home_page.dart';
 import 'package:flutter_app_sales_15082021/view/page/sign_in/sign_in_page.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/sign-up" : (context) => SignUpPage(),
         "/home" : (context) => HomePage(),
         "/splash" : (context) => SplashPage(),
+        "/cart" : (context) => CartPage(),
       },
       initialRoute: "/splash",
     );

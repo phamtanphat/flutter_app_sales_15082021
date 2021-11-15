@@ -59,7 +59,9 @@ class HomeBloc extends BaseBloc{
     loadingSink.add(true);
     try {
       OrderModel orderModel = await _orderRepository.addFoodToCart(event.foodId);
-      print(orderModel.total);
+      if (orderModel.orderId != null){
+        eventSink.add(HomeEventGetTotalCount());
+      }
     } catch (e) {
       orderModelController.sink.addError(e.toString());
     } finally {

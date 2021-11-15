@@ -92,7 +92,9 @@ class _HomePageContainerState extends State<HomePageContainer> {
                             badgeContent: Text(orderModel.total!.toString(),
                                 style: TextStyle(fontSize: 15, color: Colors.white)),
                             child: IconButton(
-                                icon: const Icon(Icons.shopping_cart), onPressed: () {})),
+                                icon: const Icon(Icons.shopping_cart), onPressed: () {
+                                  Navigator.pushNamed(context, "/cart");
+                            })),
                       );
                     }
                     return Container(
@@ -100,7 +102,9 @@ class _HomePageContainerState extends State<HomePageContainer> {
                       child: Badge(
                           padding: const EdgeInsets.all(10),
                           child: IconButton(
-                              icon: const Icon(Icons.shopping_cart), onPressed: () {})),
+                              icon: const Icon(Icons.shopping_cart), onPressed: () {
+                                Navigator.pushNamed(context, "/cart" , arguments: {"orderId" : orderModel.orderId});
+                          })),
                     );
                 },
               )
