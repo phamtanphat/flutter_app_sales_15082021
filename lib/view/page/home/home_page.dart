@@ -93,7 +93,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
                                 style: TextStyle(fontSize: 15, color: Colors.white)),
                             child: IconButton(
                                 icon: const Icon(Icons.shopping_cart), onPressed: () {
-                                  Navigator.pushNamed(context, "/cart");
+                                  Navigator.pushNamed(context, "/cart", arguments: {"orderId" : orderModel.orderId});
                             })),
                       );
                     }
@@ -103,7 +103,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
                           padding: const EdgeInsets.all(10),
                           child: IconButton(
                               icon: const Icon(Icons.shopping_cart), onPressed: () {
-                                Navigator.pushNamed(context, "/cart" , arguments: {"orderId" : orderModel.orderId});
+                                Navigator.pushNamed(context, "/cart" );
                           })),
                     );
                 },

@@ -65,4 +65,18 @@ class OrderRepository{
     return completer.future;
   }
 
+  Future<String> updateOrder(String orderId , String foodId , int quantity) async{
+    Completer<String> completer = Completer();
+    try{
+      Response response = await _orderRequest.updateOrder(orderId, foodId, quantity);
+      if (response.statusCode == 200){
+        completer.complete(response.data.toString());
+      }
+    }on DioError catch (dioError){
+      completer.completeError(dioError.response?.data["message"]);
+    } catch(e){
+      completer.completeError(e.toString());
+    }
+    return completer.future;
+  }
 }
