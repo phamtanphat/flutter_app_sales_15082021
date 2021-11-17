@@ -17,7 +17,8 @@ class FoodModel {
       List<Images>? images, 
       String? description, 
       int? price, 
-      String? cateId, 
+      int? quantity,
+      String? cateId,
       String? cateName, 
       String? createdAt, 
       String? updatedAt,}){
@@ -27,6 +28,7 @@ class FoodModel {
     _description = description;
     _price = price;
     _cateId = cateId;
+    _quantity = quantity;
     _cateName = cateName;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
@@ -35,6 +37,7 @@ class FoodModel {
   FoodModel.fromJson(dynamic json) {
     _foodId = json['foodId'];
     _foodName = json['foodName'];
+    _quantity = json['quantity'];
     if (json['images'] != null) {
       _images = [];
       json['images'].forEach((v) {
@@ -53,6 +56,7 @@ class FoodModel {
   List<Images>? _images;
   String? _description;
   int? _price;
+  int? _quantity;
   String? _cateId;
   String? _cateName;
   String? _createdAt;
@@ -63,6 +67,7 @@ class FoodModel {
   List<Images>? get images => _images;
   String? get description => _description;
   int? get price => _price;
+  int? get quantity => _quantity;
   String? get cateId => _cateId;
   String? get cateName => _cateName;
   String? get createdAt => _createdAt;
@@ -71,6 +76,7 @@ class FoodModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['foodId'] = _foodId;
+    map['quantity'] = _quantity;
     map['foodName'] = _foodName;
     if (_images != null) {
       map['images'] = _images?.map((v) => v.toJson()).toList();
