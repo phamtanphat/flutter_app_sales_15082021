@@ -20,11 +20,18 @@ class OrderRequest{
   Future getDetailOrder(){
     return _dio.get("order/shopping-cart");
   }
+
   Future updateOrder(String orderId , String foodId , int quantity){
     return _dio.post("order/update" , data: {
       "orderId": orderId,
       "foodId": foodId,
       "quantity": quantity
+    });
+  }
+
+  Future deleteItemOrder(String foodId){
+    return _dio.delete("order/delete" , data: {
+      "foodId": foodId,
     });
   }
 }

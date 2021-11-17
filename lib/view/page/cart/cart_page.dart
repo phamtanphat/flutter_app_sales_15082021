@@ -178,13 +178,21 @@ class _CartPageContainerState extends State<CartPageContainer> {
                                   quantity: foodModel.quantity!.toInt() + 1));
                             },
                             child: Text("+"),
-                          )
+                          ),
                         ],
                       )
                     ],
                   ),
                 ),
-              )
+              ),
+              Center(
+                child: IconButton(
+                  icon: Icon(Icons.delete , color: Colors.red,),
+                  onPressed: (){
+                    bloc.eventSink.add(CartEventOrderDeleteItem(foodId: foodModel.foodId!));
+                  },
+                ),
+              ),
             ],
           ),
         ),

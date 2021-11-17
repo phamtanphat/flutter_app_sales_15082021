@@ -22,6 +22,8 @@ class CartBloc extends BaseBloc{
       handleOrderDetail(event);
     }else if(event is CartEventOrderUpdate){
       handleOrderUpdate(event);
+    }else if(event is CartEventOrderDeleteItem){
+      handleOrderDeleteItem(event);
     }
   }
   @override
@@ -47,7 +49,20 @@ class CartBloc extends BaseBloc{
     loadingSink.add(true);
     try {
       String result = await _repository.updateOrder(event.orderId, event.foodId, event.quantity);
-      resultController.sink.add("ok");
+      resultController.sink.add("Cap nhat thanh cong");
+      eventSink.add(CartEventOrderDetail());
+    } catch (e) {
+      resultController.sink.addError(e.toString());
+    } finally {
+      loadingSink.add(false);
+    }
+  }
+
+  void handleOrderDeleteItem(CartEventOrderDeleteItem event) async{
+    loadingSink.add(true);
+    try {
+      String result = await _repository.deleteItemOrder(event.foodId);
+      resultController.sink.add("Xoa thanh cong");
       eventSink.add(CartEventOrderDetail());
     } catch (e) {
       resultController.sink.addError(e.toString());
