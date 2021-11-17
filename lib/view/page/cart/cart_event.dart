@@ -10,3 +10,15 @@ class CartEventOrderDetail extends CartEventBase{
   List<Object?> get props => [];
 
 }
+class CartEventOrderUpdate extends CartEventBase{
+  late String orderId;
+  late String foodId;
+  late int quantity;
+
+  CartEventOrderUpdate({required this.orderId, required this.foodId, required this.quantity});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [orderId,foodId,quantity];
+
+}

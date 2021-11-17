@@ -10,6 +10,7 @@ class CartBloc extends BaseBloc{
   late OrderRepository _repository;
 
   StreamController<CartModel> cartController = StreamController();
+  StreamController<String> resultController = StreamController();
 
   void updateOrderRepo(OrderRepository repository){
     _repository = repository;
@@ -19,11 +20,14 @@ class CartBloc extends BaseBloc{
   void dispatch(BaseEvent event) {
     if(event is CartEventOrderDetail){
       handleOrderDetail(event);
+    }else if(event is CartEventOrderUpdate){
+      handleOrderUpdate(event);
     }
   }
   @override
   void dispose() {
     cartController.close();
+    resultController.close();
     super.dispose();
   }
 
@@ -34,6 +38,19 @@ class CartBloc extends BaseBloc{
       cartController.sink.add(cartModel);
     } catch (e) {
       cartController.sink.addError(e.toString());
+    } finally {
+      loadingSink.add(false);
+    }
+  }
+
+  void handleOrderUpdate(CartEventOrderUpdate event) async{
+    loadingSink.add(true);
+    try {
+      String result = await _repository.updateOrder(event.orderId, event.foodId, event.quantity);
+      resultController.sink.add("ok");
+      eventSink.add(CartEventOrderDetail());
+    } catch (e) {
+      resultController.sink.addError(e.toString());
     } finally {
       loadingSink.add(false);
     }
