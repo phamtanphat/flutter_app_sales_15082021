@@ -34,4 +34,11 @@ class OrderRequest{
       "foodId": foodId,
     });
   }
+
+  Future submit(String orderId){
+    return _dio.post("order/confirm" , data: {
+      "orderId": orderId,
+      "status": "CONFIRM",
+    });
+  }
 }

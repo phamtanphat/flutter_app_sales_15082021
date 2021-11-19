@@ -96,6 +96,8 @@ class _HomePageContainerState extends State<HomePageContainer> {
                                   var orderModelResult = await Navigator.pushNamed(context, "/cart", arguments: {"orderId" : orderModel.orderId});
                                   if (orderModelResult != null && (orderModelResult as OrderModel).orderId!.isNotEmpty ){
                                     bloc.orderModelController.sink.add(orderModelResult);
+                                  }else{
+                                    bloc.orderModelController.sink.add(OrderModel(orderId: "", total: 0));
                                   }
                             })),
                       );

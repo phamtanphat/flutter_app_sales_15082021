@@ -94,4 +94,19 @@ class OrderRepository{
     }
     return completer.future;
   }
+
+  Future<String> submit(String orderId) async{
+    Completer<String> completer = Completer();
+    try{
+      Response response = await _orderRequest.submit(orderId);
+      if (response.statusCode == 200){
+        completer.complete(response.data.toString());
+      }
+    }on DioError catch (dioError){
+      completer.completeError(dioError.response?.data["message"]);
+    } catch(e){
+      completer.completeError(e.toString());
+    }
+    return completer.future;
+  }
 }

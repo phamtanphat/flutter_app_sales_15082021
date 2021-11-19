@@ -6,6 +6,7 @@ import 'package:flutter_app_sales_15082021/model/order_model.dart';
 import 'package:flutter_app_sales_15082021/repository/order_repository.dart';
 import 'package:flutter_app_sales_15082021/request/order_request.dart';
 import 'package:flutter_app_sales_15082021/view/page/cart/cart_bloc.dart';
+import 'package:flutter_app_sales_15082021/view/widget/container_listener_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -75,55 +76,64 @@ class _CartPageContainerState extends State<CartPageContainer> {
         Navigator.pop(context,OrderModel(orderId: orderId,total: total));
         return Future.value(true);
       },
-      child: StreamProvider.value(
-        value: bloc.cartController.stream,
-        initialData: null,
-        child: Consumer<CartModel>(
-          builder: (context, cartModel, child) {
-            if (cartModel == null) {
+      child: ContainerListenerWidget<CartBloc>(
+        callback: (event){
+          if (event is CartEventSubmitSuccess){
+            Navigator.pop(context,OrderModel(orderId: "",total: 0));
+          }
+        },
+        child: StreamProvider.value(
+          value: bloc.cartController.stream,
+          initialData: null,
+          child: Consumer<CartModel>(
+            builder: (context, cartModel, child) {
+              if (cartModel == null) {
+                total = 0;
+                return SizedBox();
+              }
               total = 0;
-              return SizedBox();
-            }
-            total = 0;
-            cartModel.items!.forEach((element) {
-              total += element.quantity!;
-            });
-            return Container(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: cartModel.items!.length,
-                        itemBuilder: (lstContext, index) =>
-                            _buildItem(cartModel.items![index], context)),
-                  ),
-                  Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.teal,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Text(
-                          "Tổng tiền : " +
-                              NumberFormat("#,###", "en_US")
-                                  .format(cartModel.total) +
-                              " đ",
-                          style: TextStyle(fontSize: 25, color: Colors.white))),
-                  Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.deepOrange)),
-                        child: Text("Confirm",
-                            style: TextStyle(color: Colors.white, fontSize: 25)),
-                      )),
-                ],
-              ),
-            );
-          },
+              cartModel.items!.forEach((element) {
+                total += element.quantity!;
+              });
+              return Container(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: cartModel.items!.length,
+                          itemBuilder: (lstContext, index) =>
+                              _buildItem(cartModel.items![index], context)),
+                    ),
+                    Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.teal,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Text(
+                            "Tổng tiền : " +
+                                NumberFormat("#,###", "en_US")
+                                    .format(cartModel.total) +
+                                " đ",
+                            style: TextStyle(fontSize: 25, color: Colors.white))),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            bloc.eventSink.add(CartEventSubmit(orderId: orderId));
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.deepOrange)),
+                          child: Text("Confirm",
+                              style: TextStyle(color: Colors.white, fontSize: 25)),
+                        )),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
