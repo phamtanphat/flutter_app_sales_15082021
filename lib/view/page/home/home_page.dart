@@ -92,8 +92,11 @@ class _HomePageContainerState extends State<HomePageContainer> {
                             badgeContent: Text(orderModel.total!.toString(),
                                 style: TextStyle(fontSize: 15, color: Colors.white)),
                             child: IconButton(
-                                icon: const Icon(Icons.shopping_cart), onPressed: () {
-                                  Navigator.pushNamed(context, "/cart", arguments: {"orderId" : orderModel.orderId});
+                                icon: const Icon(Icons.shopping_cart), onPressed: () async {
+                                  var orderModelResult = await Navigator.pushNamed(context, "/cart", arguments: {"orderId" : orderModel.orderId});
+                                  if (orderModelResult != null){
+                                    bloc.orderModelController.sink.add(orderModelResult as OrderModel);
+                                  }
                             })),
                       );
                     }
@@ -201,3 +204,4 @@ class _HomePageContainerState extends State<HomePageContainer> {
     );
   }
 }
+

@@ -14,7 +14,7 @@ class DioClient {
   DioClient._internal() {
     if (_dio == null){
       _dio = Dio(_options);
-      _dio!.interceptors.add(LogInterceptor(requestBody: true));
+      // _dio!.interceptors.add(LogInterceptor(requestBody: true));
       _dio!.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) async{
           var token = await SPref.instance.get("token");
