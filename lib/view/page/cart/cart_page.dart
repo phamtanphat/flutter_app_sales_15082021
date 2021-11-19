@@ -49,12 +49,14 @@ class CartPageContainer extends StatefulWidget {
 
 class _CartPageContainerState extends State<CartPageContainer> {
   late CartBloc bloc;
-  late String orderId;
-  late int total;
+  String orderId = "";
+  int total = 0;
 
   @override
   void didChangeDependencies() {
-    orderId = (ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>)['orderId'];
+    if(ModalRoute.of(context)?.settings.arguments != null){
+      orderId = (ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>)['orderId'];
+    }
 
     bloc = context.read();
     bloc.eventSink.add(CartEventOrderDetail());

@@ -94,8 +94,8 @@ class _HomePageContainerState extends State<HomePageContainer> {
                             child: IconButton(
                                 icon: const Icon(Icons.shopping_cart), onPressed: () async {
                                   var orderModelResult = await Navigator.pushNamed(context, "/cart", arguments: {"orderId" : orderModel.orderId});
-                                  if (orderModelResult != null){
-                                    bloc.orderModelController.sink.add(orderModelResult as OrderModel);
+                                  if (orderModelResult != null && (orderModelResult as OrderModel).orderId!.isNotEmpty ){
+                                    bloc.orderModelController.sink.add(orderModelResult);
                                   }
                             })),
                       );
