@@ -5,8 +5,13 @@ class CartModel{
   List<FoodModel>? items;
 
   CartModel.fromJson(Map<String,dynamic> json){
-    total = json['total'];
-    items = FoodModel.pareJsonModelToList(json['items']);
+    if(json != null){
+      total = json['total'] ?? null;
+      items = FoodModel.pareJsonModelToList(json['items'] ?? null);
+    }else{
+      total = 0;
+      items = [];
+    }
   }
 
 

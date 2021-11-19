@@ -99,12 +99,10 @@ class _HomePageContainerState extends State<HomePageContainer> {
                     }
                     return Container(
                       margin: const EdgeInsets.only(right: 10, top: 5),
-                      child: Badge(
-                          padding: const EdgeInsets.all(10),
-                          child: IconButton(
-                              icon: const Icon(Icons.shopping_cart), onPressed: () {
-                                Navigator.pushNamed(context, "/cart" );
-                          })),
+                      child: IconButton(
+                          icon: const Icon(Icons.shopping_cart), onPressed: () {
+                        Navigator.pushNamed(context, "/cart" );
+                      }),
                     );
                 },
               )
